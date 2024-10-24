@@ -8,9 +8,7 @@ import {
 } from "../controllers/userController";
 import {
   chooseDish,
-  submitPayment,
-  sendDeliveryTime,
-  receiveMessage,
+  submitPayment
 } from "../controllers/orderController";
 
 const router = express.Router();
@@ -36,11 +34,5 @@ router.post("/chooseDish", asyncHandler(chooseDish));
 
 // Envio do comprovante de pagamento
 router.post("/submitPayment", asyncHandler(submitPayment));
-
-// Envio de mensagem cifrada ao usuário
-router.post("/sendDeliveryTime", asyncHandler(sendDeliveryTime));
-
-// Recepção de mensagem cifrada pelo usuário
-router.post("/receiveMessage", asyncHandler(receiveMessage));
 
 export default router;
