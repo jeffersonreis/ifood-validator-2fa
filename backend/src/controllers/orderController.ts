@@ -39,8 +39,8 @@ export const submitPayment = async (req: Request, res: Response, next: NextFunct
   }
 
   // Verifique se a chave de sessão tem 32 bytes (256 bits)
-  const key = Buffer.from(sessionToken, 'hex');
-  if (key.length !== 32) {
+  const sessionKey = Buffer.from(sessionToken, 'hex');
+  if (sessionKey.length !== 32) {
     return res.status(400).send("Invalid session token length");
   }
 
@@ -51,7 +51,7 @@ export const submitPayment = async (req: Request, res: Response, next: NextFunct
   }
 
   try {
-    const decipher = crypto.createDecipheriv("aes-256-cbc", key, ivBuffer);
+    const decipher = crypto.createDecipheriv("aes-256-cbc", sessionKey, ivBuffer);
     let payment = decipher.update(cipherPayment, "hex", "utf8");
     payment += decipher.final("utf8");
 
@@ -68,7 +68,7 @@ export const submitPayment = async (req: Request, res: Response, next: NextFunct
     const newIv = crypto.randomBytes(16);
     const deliveryTime = "18:30";
 
-    const cipher = crypto.createCipheriv("aes-256-cbc", key, newIv);
+    const cipher = crypto.createCipheriv("aes-256-cbc", sessionKey, newIv);
     let cipherText = cipher.update(`Horário de entrega: ${deliveryTime}`, "utf8", "hex");
     cipherText += cipher.final("hex");
 

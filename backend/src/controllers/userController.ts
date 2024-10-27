@@ -125,5 +125,7 @@ export const authCode = async (req: Request, res: Response, next: NextFunction) 
 
   await updateUser(id, { session: sessionToken });
 
-  return res.status(200).send({ user });
+  let userResponse = { id: user.id, username: user.username };
+
+  return res.status(200).send({ user: userResponse });
 };

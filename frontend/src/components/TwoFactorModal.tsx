@@ -25,7 +25,6 @@ interface User {
 const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpen, onRequestClose, userId }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [authCode, setAuthCode] = useState('');
-  const [user, setUser] = useState<User | null>(null);
   const [receivedMessage, setReceivedMessage] = useState('');
 
   useEffect(() => {
@@ -80,8 +79,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpen, onRequestClose,
       const data = await response.json();
       toast.success('Autenticação feita com sucesso!');
       console.log('RETORNO DA AUTENTICAÇÂO', data);
-      setUser(data.user);
-      
+            
       // Chamar a função para enviar o pagamento cifrado
       sendEncryptedPayment(data.user);
 
